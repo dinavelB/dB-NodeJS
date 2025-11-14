@@ -1,0 +1,52 @@
+nodejs methods
+
+1️⃣ Global Methods in Node.js
+
+Node.js provides some built-in global methods you can use without importing anything:
+
+Method	Description
+setTimeout(fn, ms)	Run a function after a delay in milliseconds
+setInterval(fn, ms)	Run a function repeatedly every X milliseconds
+clearTimeout(timeoutId)	Stop a scheduled timeout
+clearInterval(intervalId)	Stop a scheduled interval
+require(module)	Import a module
+console.log()	Print output to console
+process.exit(code)	Exit the Node.js process
+process.on(event, callback)	Listen for process events
+__dirname	Returns current directory
+__filename	Returns current file name
+
+2️⃣ File System (fs) Methods
+
+For reading/writing files:const fs = require('fs');
+
+Method	Description
+fs.readFile(path, callback)	Read a file asynchronously
+fs.readFileSync(path)	Read a file synchronously
+fs.writeFile(path, data, callback)	Write to a file asynchronously
+fs.writeFileSync(path, data)	Write to a file synchronously
+fs.appendFile(path, data, callback)	Append data to a file
+fs.unlink(path, callback)	Delete a file
+fs.mkdir(path, callback)	Create a directory
+fs.readdir(path, callback)	Read contents of a directory
+
+3️⃣ HTTP Module Methods
+
+For creating servers and handling requests:
+
+Method	Description
+http.createServer(callback)	Create an HTTP server
+server.listen(port, host, callback)	Start the server on a port
+response.write(data)	Write response data
+response.end()	End the response
+
+
+4️⃣ Path Module Methods
+
+For handling file paths:
+
+Method	Description
+path.join(...)	Join multiple path segments
+path.basename(path)	Get the file name from a path
+path.dirname(path)	Get directory name
+path.extname(path)	Get file extension
