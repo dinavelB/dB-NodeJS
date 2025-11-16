@@ -1,0 +1,10 @@
+1. promise takes one param only. if you need to pass multiple values, pass it as an object ex. function-promise.js
+2.setTimeout for delay
+3.The value that will be pass determines on the value you gave on promise params.
+4.then for succesful and catch for errors.
+5.U can use a method to perform a specific task if successful and error
+6.The keyword async before a function makes the function return a promise:
+7.The await keyword can only be used inside an async function.
+8.The await keyword makes the function pause the execution and wait for a resolved promise before it continues:
+9. async await and promise aint accepting multpile values only single so wrap it  on obj or array depends on your need
+10.callback is a function passed to another method or function.
