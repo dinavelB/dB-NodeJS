@@ -1,0 +1,20 @@
+# Database
+mongodb, mongoose, sequelize, prisma, typeorm
+
+# Web Frameworks  
+express, koa, fastify, nestjs
+
+# HTTP Clients
+axios, node-fetch, got, superagent
+
+# Authentication
+bcrypt, jsonwebtoken, passport, auth0
+
+# Validation
+joi, yup, validator.js, express-validator
+
+# Testing
+jest, mocha, chai, sinon, supertest
+
+# Utilities
+lodash, underscore, moment, date-fns, uuid
