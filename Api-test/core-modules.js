@@ -31,10 +31,32 @@ async function readTFile(){
     return promise;
 }
 
+async function writeFile(userInput){
+        const fs = require('fs')
+        const path = require('path')
+
+        const pathFile = path.join(__dirname, '../Documentation/docs.txt')
+
+        return new Promise((resolve, reject) =>{
+
+        //all calback asynchronous are error-first
+        //plus after the userinput because you want to append it.
+        fs.appendFile(pathFile, userInput + '\n', 'utf8', (error) =>{
+            if(error) return reject(error)
+
+                fs.readFile(pathFile, 'utf8', (error, data) =>{
+                    if(error) reject(error)
+                        resolve(data)
+                })
+        })
+        
+    })
+}
+
 (async () =>{
 
     try{
-        const file = await readTFile();
+        const file = await writeFile("lol");
         console.log(file)
     } catch(error){
         console.log('error at', error)
