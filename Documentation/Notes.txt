@@ -7,5 +7,5 @@
 7.The await keyword can only be used inside an async function.
 8.The await keyword makes the function pause the execution and wait for a resolved promise before it continues:
 9. async await and promise aint accepting multpile values only single so wrap it  on obj or array depends on your need
-10.callback is a function passed to another method or function.16. yeyy im a test
-test
+10.callback is a function passed to another method or function.
+11. fs for filesystem, path for filepath, readline for terminal interactivity

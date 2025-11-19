@@ -26,7 +26,7 @@
                     }
 
         // Ensure the file ends with a newline before appending
-        const prefix = data && !data.endsWith('\n') ? '\n' : '';
+        const prefix = data && !data.endsWith('\n') ? '\n' : ''; //shorthand if and else operator
         fs.appendFile(filePath, prefix + userInput + '\n', 'utf8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
