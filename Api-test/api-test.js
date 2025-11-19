@@ -5,7 +5,7 @@ async function getFile(){
     //creates a request
     let req = new XMLHttpRequest();
 
-    //gets a file thru open()
+    //gets a file thru open() 
     req.open('GET', "mycar.html");
 
     //loads the file if standards met

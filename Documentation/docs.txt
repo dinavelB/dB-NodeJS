@@ -50,3 +50,6 @@ path.join(...)	Join multiple path segments
 path.basename(path)	Get the file name from a path
 path.dirname(path)	Get directory name
 path.extname(path)	Get file extension
+
+
+NodeJS REPL (Read, Evaluate, Print, Loop)
