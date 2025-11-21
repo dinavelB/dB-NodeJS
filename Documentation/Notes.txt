@@ -9,3 +9,5 @@
 9. async await and promise aint accepting multpile values only single so wrap it  on obj or array depends on your need
 10.callback is a function passed to another method or function.
 11. fs for filesystem, path for filepath, readline for terminal interactivity
+12. practice to return the resolve and reject values in promises, funtcion that have promises must return the promise
+13. resolve, reject are promises methods so therefore a function that has a promise nust return a promise object and inside of promise object must return value

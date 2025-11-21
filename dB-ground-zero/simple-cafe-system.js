@@ -7,7 +7,7 @@ const rl = readLine.createInterface({
     output: process.stdout
 })
 
-// add a helper method
+// add a helper method for question
 function coffeeInfo(question){
     return new Promise((resolve) =>{ //no reject cuz we dont need it on this logic
                                     //this is a callback asynchronous therefore use promise.
