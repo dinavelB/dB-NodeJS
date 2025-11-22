@@ -20,7 +20,7 @@ async function students(infos){
 //method that asks a questions then returns values
 async function start(){
     const studentName = await students("Enter the student name: \n");
-    const studentID = parseFloat(await students("Enter student ID: \n"));
+    const studentID = Number(await students("Enter student ID: \n"));
     const studentCourse = await students("Enter student course: \n");
 
     return ({studentName, studentID, studentCourse})
@@ -44,7 +44,24 @@ class Records{
     constructor(){
         this.records =   [] //array
     }
-
+    async decision(){
+        //you dont need a promise if your calling an another function promise via await,
+        //because await only works at async fucntion only, not under the promise or etc. just async func.
+        const answer = Number(await students("type 1 to add students, type 2 to see lists\n"))
+            if(answer === 1){
+                //since addstudent need a value, create an instance of student.
+                const studentInfo = await start();
+                const student = new Student(studentInfo);
+                return await this.addStudent(student)
+            } else if(answer === 2){
+                return await this.readFile()
+            } else{
+                //its nice to throw and error object than throw itself only.
+                //cause, This gives a proper stack trace and is standard.
+                throw new Error("must be only a 1 and 2 numbers.")
+            }
+            
+    }
     addStudent(student){
         if(typeof student !== 'object') throw "Error";
 
@@ -71,17 +88,31 @@ class Records{
             })
         })
     }
+
+    async readFile(){
+        //use standardize naming convention in promise
+        return new Promise((resolve,reject) =>{
+            filesystem.readFile(pathfile, 'utf8', (error, data) =>{
+                if(error) return reject(error)
+
+                resolve(data)
+            })
+        })
+    }
+
+    displayStudents(){
+        for (let student of this.records){
+            console.log(student)
+        }
+    }
 }
 
 //dont forget to call a method when you wrap it :)
 async function main(){
-    const studentInput = await start();
-    const students = new Student(studentInput)
     const bookrecords = new Records()
-    
-
-    const fileSystem = await bookrecords.addStudent(students) //addStudent do return a value, its from the file systems
-    console.log(fileSystem)
+    const students = await bookrecords.decision();
+    console.log(students)
+    rl.close();
 }
 
 main()
