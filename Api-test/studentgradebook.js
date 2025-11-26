@@ -19,7 +19,7 @@ async function students(infos){
 
 //method that asks a questions then returns values
 async function start(){
-    const studentName = await students("Enter the student name: \n");
+    const studentName = await students("Enter the student name: \n"); //return value is resolve(answer) 
     const studentID = Number(await students("Enter student ID: \n"));
     const studentCourse = await students("Enter student course: \n");
 
@@ -50,9 +50,10 @@ class Records{
         const answer = Number(await students("type 1 to add students, type 2 to see lists\n"))
             if(answer === 1){
                 //since addstudent need a value, create an instance of student.
+                //instance is created it can now use in various classes however you like
                 const studentInfo = await start();
                 const student = new Student(studentInfo);
-                return await this.addStudent(student)
+                return await this.addStudent(student)   
             } else if(answer === 2){
                 return await this.readFile()
             } else{
@@ -78,6 +79,7 @@ class Records{
 
             //promise, returns a value. only reject or resolve
             //value can be use to other methods or storing
+            //pass the object to appendfile
             filesystem.appendFile(pathfile, lineStudents, 'utf8', (error) =>{
                 if (error) return reject(error) //practice to return a resoslve or reject
 

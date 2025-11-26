@@ -31,6 +31,7 @@
             //it will find the files
             const websitePath = path.join(__dirname, '../myWebsite', filePath)
 
+            
             fileSystem.readFile(websitePath, (error, content)=>{
                 if(error){
                     console.log("error: " + error)
