@@ -11,18 +11,5 @@
 11. fs for filesystem, path for filepath, readline for terminal interactivity
 12. practice to return the resolve and reject values in promises, funtcion that have promises must return the promise
 13. resolve, reject are promises methods so therefore a function that has a promise nust return a promise object and inside of promise object must return value
-as
-12.test
-asdsad
-adad
-adsasdasd
-test
-test
-sdsa
-sample
-test
-hasgdads
-sampple
-jadsda
-ajdhjasdahsd
-ssample
+14. for of for values, for in for keys. but not adviceable to use for of in keys
+15. if you return a promise, it cant print itself so use console.log

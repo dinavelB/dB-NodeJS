@@ -1,9 +1,4 @@
-Dinavel Binongo               241544                BSIT
-Andrew Batnag                 24555                 BSIT
-Jessa Gozun                   2415344               BSIT
-dina                          23                    test
-Jessa Gozun                   2415                  BSIT
-dinavel                       2432                  23
-ds                            2432                  BSIT
-dinavel                       241544                BSIT
-dinavel                       241544                BSit
+jessa                         101                   BSIT                  CSS
+dinavel estipular             241544                BSIT                  CSS
+dina dina                     241545                BSIT                  CSS
+dinavel esti                  12345                 BSIT                  CSS

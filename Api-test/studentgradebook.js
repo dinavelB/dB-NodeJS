@@ -1,7 +1,7 @@
     const filesystem = require('fs');
     const pathFile = require('path');
     const readline = require('readline');
-    const findID = require('./logic-student-gradebook')
+    const {findID, deleteStudent} = require('./logic-student-gradebook')
 
     const pathfile = pathFile.join(__dirname, '../Documentation/recordstudent/students.txt')
 
@@ -25,10 +25,14 @@
                 let existingID = []
                 try{
                     const data = await filesystem.promises.readFile(pathfile, 'utf8');
+                    //split method, turning strings into array to strings sample("hello World") to ["hello", "world"]
+                    //split(condition wehre to split ends)
                     const lines = data.split('\n').filter(Boolean);
                     for(let line of lines){
 
-                        const parts = line.trim().split(/\s+/); // split by whitespace
+                        ///\s+/ means one or more spaces will be split
+                        //this will turn in to array of separated strings.
+                        const parts = line.trim().split(/\s{2,}/); // split by whitespace
                         const id = Number(parts[1]); // assuming second column is studentID
                         existingID.push(id);
 
@@ -79,27 +83,57 @@
             this.records =   [] //array
         }
         async decision(){
-            console.log("==============================MAIN MENU===============================")
-            console.log("1.Add Student\n2.See students\n3.Find Student")
-            const answer = Number(await students("Enter the Number: "))
+            let repeat = true
+            const decide = Number(await students("enter 1 to start, enter 2 to exit\n"))
+            do{
 
-                if(answer === 1){
-                    const studentInfo = await start(this.records);
-                    const student = new Student(studentInfo);
-                    return await this.addStudent(student)   
-                } else if(answer === 2){
-                    return await this.readFile()
-                } else if(answer === 3){
-                    const dpName = await students("Enter the department name:\n")
-                    const studentID = await students("Enter students ID:\n")
+                if(decide === 1){
+                    console.log("==============================MAIN MENU===============================")
+                    console.log("1.Add Student\n2.See students\n3.Find Student\n4.Delete Student\n5. Exit")
+                    const answer = Number(await students("Enter the Number: "))
 
-                    //filter the array
-                    const department = this.records.filter(department => department.department === dpName)
-                    const findstudentID = findID(department, studentID)
-                    console.log(findstudentID);
-                }
+                        const stateActions = {
+                                1: async() => {
+                                    const studentInfo = await start(this.records);
+                                    const student = new Student(studentInfo);
+                                    const data =  await this.addStudent(student)
+                                    console.log(data)   
+                                },
+                                2: ()=>{
+                                    return new Promise(resolve =>{
+                                        setTimeout(async ()=>{
+                                            const readfile = await this.readFile()
+                                            console.log(readfile) 
+                                            resolve(readfile)  
+                                        }, 2000)
+                                    })
+                                },
+                                3: async () =>{
+            
+                                    const dpName = await students("Enter the department name:\n")
+                                    const studentID = Number(await students("Enter students ID:\n"))
+
+                                    const findstudentID = await findID(dpName, studentID)
+                                    console.log(findstudentID);
+                                },
+                                4: async () =>{
+                                    const sID = Number(await students("Enter the student's ID you want to delete.\n"))
+                                    const remaining = await deleteStudent(sID)
+                                    console.log(remaining)
+                                }
+                            }  
                 
-        }    
+                            const actions = stateActions[answer]
+                            //remember bracket, its a key. 
+                            if(actions) {
+                                await actions()
+                            } else {
+                                repeat = false
+                            }
+                }
+            }while(repeat)
+        }
+
         addStudent(newStudent){
             if(typeof newStudent !== 'object') throw "Error";
                 
@@ -107,11 +141,12 @@
 
                 return new Promise((resolve, reject) =>{
                 //asynchronous callbacks needs promise
-                console.log("======Student Name============Student ID============Student Course======")
+                console.log("======Student Name============Student ID============Student Course==========Department=============")
                 const lineStudents = //this is spacing on the and of each responses
                 `${newStudent.studentName.padEnd(30)}` +
                 `${String(newStudent.studentID).padEnd(22)}` +
-                `${newStudent.studentCourse}\n`;
+                `${newStudent.studentCourse.padEnd(22)}` +
+                `${newStudent.department}\n`;
 
 
                 //promise, returns a value. only reject or resolve
@@ -127,14 +162,12 @@
                 })
             })
         }
-        
-
         async readFile(){
             //use standardize naming convention in promise
             return new Promise((resolve,reject) =>{
+                console.log("======Student Name============Student ID============Student Course==========Department=============")
                 filesystem.readFile(pathfile, 'utf8', (error, data) =>{
                     if(error) return reject(error)
-
                     resolve(data)
                 })
             })
@@ -147,12 +180,9 @@
         }
     }   
     //dont forget to call a method when you wrap it :)
-    async function main(){
+    async function main(){  
         const bookrecords = new Records()
-        const file = await bookrecords.decision();
-        console.log(file)
-
-        bookrecords.displayStudents()
+        await bookrecords.decision()
         rl.close();
     }
 
