@@ -14,7 +14,6 @@ function serverFunction(){
         passphrase: "dB020606"
     }
     return new Promise((resolve, reject) =>{
-
         const server = https.createServer(serverOptions, (request, response) =>{
 
         let filename;
