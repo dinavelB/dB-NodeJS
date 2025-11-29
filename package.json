@@ -14,7 +14,10 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-  "url": "https://github.com/dinavelB/dB-NodeJS/issues"
+    "url": "https://github.com/dinavelB/dB-NodeJS/issues"
   },
-  "homepage": "https://github.com/dinavelB/dB-NodeJS#readme"
+  "homepage": "https://github.com/dinavelB/dB-NodeJS#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0"
+  }
 }

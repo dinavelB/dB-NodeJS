@@ -1,66 +1,57 @@
-//const { rejects } = require('assert')
-//const fs = require('fs') //this is a core module declared by require method
-//fs for file system it provides crud, create, read, update, delete.
-//good for file handling related tasks
-
-/*
-fs.readFile('list.txt', 'utf-8', (error) =>{
-    if(error){
-        throw error
-    }
+const crypto = require('crypto')
+const readline = require('readline')
+const bcrypt = require('bcrypt')
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
 })
-*/
+    //here are the algos
+    //"aes-256-cbc" 
+    //"aes-256-ctr"
+    //"aes-192-cbc"
+    //"aes-128-cbc"
 
-async function readTFile(){
-    //Important Note: wrap the callback to promise.
-    const promise = new Promise((resolve, reject) =>{
-        //file system module
-        const fs = require('fs');
-        //path module
-        const path = require('path');
-
-        //determine the path file 
-        const filePath = path.join(__dirname, '../Documentation/docs.txt');
-
-        fs.readFile(filePath, 'utf-8', (error, data) =>{
-            if(error) reject(error)
-                else resolve(data)
-        })
+const helper = async(question) =>{
+    return new Promise((resolve)=>{
+        rl.question(question, answer => resolve(answer))
     })
-
-    return promise;
 }
+function hidePassword(pass){
+    const passkey = crypto.createHash("sha256").update("dB020606").digest();
+    const iv = crypto.randomBytes(16)
+    const encrypt = crypto.createCipheriv("aes-256-cbc", passkey, iv)
 
-async function writeFile(userInput){
-        const fs = require('fs')
-        const path = require('path')
+    const encryptdata = Buffer.concat([
+        encrypt.update(pass, 'utf8'),
+        encrypt.final()
+    ])
 
-        const pathFile = path.join(__dirname, '../Documentation/docs.txt')
+    const hmacKey = crypto.createHmac("sha256", passkey).update(encryptdata).digest("hex")
 
-        return new Promise((resolve, reject) =>{
-
-        //all calback asynchronous are error-first
-        //plus after the userinput because you want to append it.
-        fs.appendFile(pathFile, userInput + '\n', 'utf8', (error) =>{
-            if(error) return reject(error)
-
-                fs.readFile(pathFile, 'utf8', (error, data) =>{
-                    if(error) reject(error)
-                        resolve(data)
-                })
-        })
-        
+    return ({
+        iv: iv.toString("hex"),
+        data: encryptdata.toString("hex"),
+        signature: hmacKey
     })
 }
 
-(async () =>{
+const checkpassword = async (password, reenter)=>{
+    let passwords  = []
 
-    try{
-        const file = await writeFile("lol");
-        console.log(file)
-    } catch(error){
-        console.log('error at', error)
+    password = await helper("Enter your password\n")
+    reenter = await helper("Reenter your password\n")
+    //const salt = crypto.randomBytes(16)
+
+    const thepass = await bcrypt.hash(password, 12);
+    const repass = await bcrypt.compare(reenter, thepass)
+
+    if(!repass){
+        console.log("password do not match")
+    } else {
+        passwords.push(password)
+        const res = hidePassword(thepass)
+        console.log(res)
     }
-})();
+}
 
-
+checkpassword()
