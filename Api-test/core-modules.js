@@ -44,7 +44,7 @@ const checkpassword = async (password, reenter)=>{
 
     const thepass = await bcrypt.hash(password, 12);
     const repass = await bcrypt.compare(reenter, thepass)
-
+    
     if(!repass){
         console.log("password do not match")
     } else {

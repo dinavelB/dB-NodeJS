@@ -2,27 +2,32 @@ const fs = require('fs');
 const path = require('path')
 const myHttps = require('https');
 const { resolveNaptr } = require('dns');
-
+const url = require('url')
 
 function dBServer(){
     let mimetypes = {
         "html" : "text/html",
-        "css" : "text/css"
+        "css" : "text/css",
+        "js": "text/javascript",
+        "json": "application/json",
+        "png": "image/png",
+        "jpg": "image/jpeg",
+        "jpeg": "image/jpeg",
+        "ico": "image/x-icon"
     }
 
     let serverOpts = {
-        pfx: fs.readFileSync('ssl/cer.pfx'),
+        pfx: fs.readFileSync(path.join(__dirname, '../cert.pfx')),
         passphrase: "dB020606"
     }
-
+    
     const server = myHttps.createServer(serverOpts, (request, response) =>{
-        let filename;
-        if(request.url === '/'){
-            filename = "/homepage.html"
-        } else {
-            filename = request.url
-        }
+        let parsedUrl = url.parse(request.url)//gets url's or body depends on the method
+        let filename = parsedUrl.pathname
 
+        filename = filename === '/' ? '/homepage.html' : filename //for static
+
+        
         const folderpath = path.join(__dirname, "../myWebsite", filename);
         
         fs.readFile(folderpath, (error, data) =>{
@@ -33,14 +38,15 @@ function dBServer(){
             }
 
             const extractfile = path.extname(folderpath).slice(1)
-            const mimeTypes = mimetypes[extractfile] || "application octet-stream"
+            const mimeType = mimetypes[extractfile] || "application octet-stream"
 
-            response.writeHead(200, {"content-type" : mimeTypes})
+            response.writeHead(200, {"Content-Type" : mimeType})
             response.end(data)
         })
     })
 
-    server.listen(8080, 'localhost', ()=>{s
-        console.log("the server started at server 8080")
+    server.listen(8280, ()=>{
+        console.log("the server started at server 8280")
     })
 }
+dBServer()

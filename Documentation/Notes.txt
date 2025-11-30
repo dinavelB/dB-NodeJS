@@ -13,3 +13,4 @@
 13. resolve, reject are promises methods so therefore a function that has a promise nust return a promise object and inside of promise object must return value
 14. for of for values, for in for keys. but not adviceable to use for of in keys
 15. if you return a promise, it cant print itself so use console.log
+16. get sends in url, post send in body
