@@ -1,7 +1,7 @@
 
 const fs = require('fs')
 const path = require('path')
-const dBServer = require('../../myServer/dBServer')
+const server = require('../../myServer/finalServer.js')
 
 function printData(){
     const routes = {
@@ -26,4 +26,4 @@ function printData(){
 
     return routes;
 }
-dBServer(printData())
+server(printData())
